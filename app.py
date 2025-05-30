@@ -14,33 +14,37 @@ st.write("This app demonstrates how an AI agent can analyze transaction data lik
 @st.cache_resource
 def initialize_data():
     df = load_from_db()
-    df = add_features(df)
+    if df.empty:
+        st.error("Failed to load data from the database. Please check your DB connection and credentials.")
+    else:
+        df = add_features(df)
     return df
 
 with st.spinner("Loading data..."):
     df = initialize_data()
 
-with st.expander("View Sample Data"):
-    st.dataframe(df.head(10), use_container_width=True)
+if not df.empty:
+    with st.expander("View Sample Data"):
+        st.dataframe(df.head(10), use_container_width=True)
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "Dashboard",
-    "High-Value Transactions",
-    "Activity After Inactivity",
-    "Merchant Fraud Rates",
-    "Custom Query"
-])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        "Dashboard",
+        "High-Value Transactions",
+        "Activity After Inactivity",
+        "Merchant Fraud Rates",
+        "Custom Query"
+    ])
 
-with tab1:
-    render_dashboard(df)
-with tab2:
-    render_high_value(df)
-with tab3:
-    render_inactivity(df)
-with tab4:
-    render_merchant_fraud(df)
-with tab5:
-    render_custom_query(df)
+    with tab1:
+        render_dashboard(df)
+    with tab2:
+        render_high_value(df)
+    with tab3:
+        render_inactivity(df)
+    with tab4:
+        render_merchant_fraud(df)
+    with tab5:
+        render_custom_query(df)
 
-st.markdown("---")
-st.markdown("💳 Credit Card Fraud AI Agent | Built with Streamlit, Pandas, and OpenAI")
+    st.markdown("---")
+    st.markdown("💳 Credit Card Fraud AI Agent | Built with Streamlit, Pandas, and OpenAI")
