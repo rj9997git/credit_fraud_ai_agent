@@ -1,0 +1,20 @@
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv_cr_fr/
+.env
+
+# Database files
+*.db
+fraud_db
+data/fraud.db
+
+# OS files
+.DS_Store
+
+# Other
+*.log
